@@ -15,6 +15,6 @@ __IMPORTANT NOTE:__ This proposal only expands functionality that exists *curren
 For instance, the V.E. Petrucci Library would like to include a link to the campus map page, which would automatically show their building, rather than display a map graphic file or force a visitor to multiple steps in order to find their campus location.
 
 ## Working Example
-The working code, which uses the existing checkbox ID as the fragment URL, examples can be found at: 
+The working code, using the checkbox ID as the fragment URL, examples (any building should work) can be found at: 
 - http://www.lib.csufresno.edu/map/#viticulture_and_enology_research_center
 - http://www.lib.csufresno.edu/map/#library
