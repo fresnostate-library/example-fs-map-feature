@@ -1,0 +1,46 @@
+<script>
+  // control special case where a direct link is needed to preactivate a set of map items
+  $(document).ready( function() {
+    if(window.location.hash) {
+      var theHash = window.location.hash;
+      var selectedElement;
+      
+      theHash = theHash.replace("#","");
+  
+      selectedElement = document.getElementById(theHash+"-cb");
+      
+      if(selectedElement != null && selectedElement.type == 'checkbox') {
+        selectedElement.checked = true;
+      } else if (theHash=='universitycenter') { // abstracted building logic needs to go here...
+        // hack for university center...
+        selectedElement = document.getElementById("university_center-cb");
+        selectedElement.checked = true;
+      }
+      // switch used to be inside previous if statement...
+      switch(theHash) {
+        case "studentparking": toggleStudentparking(); break;
+        case "facultyparking": toggleFacultyparking(); break;
+        case "accessibleparking": toggleAccessibleparking(); break
+        case "bicycleparking": toggleBicycleparking(); break;
+        case "dailypermit": toggleDailypermit(); break;
+        case "meteredparking": toggleMeteredparking(); break;
+        case "motorcycleparking": toggleMotorcycleparking(); break;
+        case "payforprint": togglePayforprint(); break;
+        case "universitycenter":
+          console.log("uc"); 
+          toggleBuilding('University Center (UC)'); 
+          break; 
+      }
+      
+    }
+  });
+  
+  $("[id$=-cb]").each(
+  function(){
+    $(this).change(
+      function(){
+        var sFormattedMessage = $(this).attr('id') + " " + $(this).is(':checked');
+        _gaq.push(['_trackEvent', 'CheckBox', 'Use', sFormattedMessage, null, true]);
+      });
+  });
+</script>
