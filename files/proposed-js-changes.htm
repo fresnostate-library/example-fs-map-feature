@@ -1,0 +1,57 @@
+<script>
+  // control special case where a direct link is needed to preactivate a set of map items
+  $(document).ready( function() {
+    if(window.location.hash) {
+      var theHash = window.location.hash;
+      var selectedElement;
+      var convertedHash;
+      var writeToConsole = 1;
+      
+      theHash = theHash.replace("#","");
+  
+      selectedElement = document.getElementById(theHash+"-cb");
+      
+      // Set the checkbox in the Building List.
+      if(selectedElement != null && selectedElement.type == 'checkbox') {
+        selectedElement.checked = true;
+        convertedHash = $('label[for="' + theHash + '-cb"]').html();
+      } else if (theHash=='universitycenter') { 
+        // Keep this ELSE-IF statement for legacy purposes; or remove if you can get them to change their hash string from "universitycenter" to "university_center".
+        selectedElement = document.getElementById("university_center-cb");
+        selectedElement.checked = true;
+      }
+
+      // Set the map marker and position the view screen.
+      switch(theHash) {
+        case "studentparking": toggleStudentparking(); break;
+        case "facultyparking": toggleFacultyparking(); break;
+        case "accessibleparking": toggleAccessibleparking(); break
+        case "bicycleparking": toggleBicycleparking(); break;
+        case "dailypermit": toggleDailypermit(); break;
+        case "meteredparking": toggleMeteredparking(); break;
+        case "motorcycleparking": toggleMotorcycleparking(); break;
+        case "payforprint": togglePayforprint(); break;
+        case "universitycenter":
+          // Keep this Case for legacy purposes; or remove if you can get them to change their hash string from "universitycenter" to "university_center".
+          console.log("uc"); 
+          toggleBuilding('University Center (UC)'); 
+          break; 
+        default:
+          // This should work for most buildings, as long as Checkbox label string equals JSON (all_markers.buildings) title value.
+          if (writeToConsole) { console.log("Hash Conversion: " + theHash + " >> " + convertedHash); }
+          toggleBuilding(convertedHash);
+          break;
+      }
+      
+    }
+  });
+  
+  $("[id$=-cb]").each(
+  function(){
+    $(this).change(
+      function(){
+        var sFormattedMessage = $(this).attr('id') + " " + $(this).is(':checked');
+        _gaq.push(['_trackEvent', 'CheckBox', 'Use', sFormattedMessage, null, true]);
+      });
+  });
+</script>
